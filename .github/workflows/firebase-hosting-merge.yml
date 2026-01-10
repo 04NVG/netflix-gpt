@@ -38,4 +38,6 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETFLIXGPT_2F0BF }}
           projectId: netflixgpt-2f0bf
-          # channelId не указываем — это production deploy
+          # Для production деплоя не указываем channelId
+          # или можно указать явно:
+          # target: 'production'
