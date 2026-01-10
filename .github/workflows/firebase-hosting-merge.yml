@@ -1,3 +1,4 @@
+# Деплой на Firebase Hosting при merge в main
 name: Deploy to Firebase Hosting on Merge
 
 on:
@@ -13,22 +14,28 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. Клонируем репозиторий
       - uses: actions/checkout@v4
 
+      # 2. Устанавливаем Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
+      # 3. Устанавливаем зависимости
       - name: Install dependencies
         run: npm install
 
+      # 4. Собираем проект
       - name: Build project
         run: npm run build
 
+      # 5. Деплой на Firebase Hosting (production)
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETFLIXGPT_2F0BF }}
           projectId: netflixgpt-2f0bf
+          # channelId не указываем — это production deploy
