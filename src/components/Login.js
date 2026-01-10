@@ -45,7 +45,7 @@ import { checkValidData } from "../utils/validate";
                  w-11/12 max-w-md mx-auto my-52 flex flex-col">
       
         <h1 className="text-2xl sm:text-3xl font-bold mb-4">
-          {isSignInForm ? "Sign In" : "Sign Up"}
+          {isSignInForm ? "Sign In Bro" : "Sign Up"}
         </h1>
         {!isSignInForm && (
           <input
