@@ -1,4 +1,3 @@
-# Авто-деплой на Firebase Hosting для PR (preview channel)
 name: Deploy to Firebase Hosting on PR
 
 on:
@@ -11,7 +10,6 @@ permissions:
 
 jobs:
   build_and_preview:
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       # 1. Клонируем репозиторий
@@ -31,12 +29,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # 5. Деплой на preview channel Firebase Hosting
+      # 5. Деплой на preview channel
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETFLIXGPT_2F0BF }}
           projectId: netflixgpt-2f0bf
-          channelId: pr-${{ github.event.pull_request.number }}
+          # Если number нет, ставим default канал
+          channelId: ${{ github.event.pull_request.number || 'pr-preview' }}
           expires: 7d
