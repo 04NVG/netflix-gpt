@@ -2,6 +2,7 @@ name: Deploy to Firebase Hosting on PR
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   checks: write
@@ -10,33 +11,30 @@ permissions:
 
 jobs:
   build_and_preview:
+    # Запускаем только для PR из того же репозитория
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    
     steps:
-      # 1. Клонируем репозиторий
       - uses: actions/checkout@v4
-
-      # 2. Устанавливаем Node.js
+      
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-
-      # 3. Устанавливаем зависимости
+      
       - name: Install dependencies
         run: npm install
-
-      # 4. Собираем проект
+      
       - name: Build project
         run: npm run build
-
-      # 5. Деплой на preview channel
-      - name: Deploy to Firebase Hosting
-        id: deploy
+      
+      - name: Deploy to Firebase Preview Channel
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETFLIXGPT_2F0BF }}
           projectId: netflixgpt-2f0bf
+          # Ключевое исправление: используем правильный синтаксис
           channelId: pr-${{ github.event.pull_request.number }}
           expires: 7d
