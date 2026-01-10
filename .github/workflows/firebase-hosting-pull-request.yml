@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   build_and_preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       # 1. Клонируем репозиторий
@@ -31,11 +32,11 @@ jobs:
 
       # 5. Деплой на preview channel
       - name: Deploy to Firebase Hosting
+        id: deploy
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NETFLIXGPT_2F0BF }}
           projectId: netflixgpt-2f0bf
-          # Если number нет, ставим default канал
-          channelId: ${{ github.event.pull_request.number || 'pr-preview' }}
+          channelId: pr-${{ github.event.pull_request.number }}
           expires: 7d
