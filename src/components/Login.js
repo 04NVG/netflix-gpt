@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import { Header } from "./Header";
 import { checkValidData } from "../utils/validate";
 import {
@@ -83,7 +83,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-         
+           console.log(user)
           // ...
         })
         .catch((error) => {
