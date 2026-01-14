@@ -24,7 +24,7 @@ export const VideoBackground = ({ movieId }) => {
 
   useEffect(() => {
     getTrailerVideo();
-  }, [[movieId, dispatch]]);
+  }, [movieId, dispatch]);
 
   return (
     <div>
