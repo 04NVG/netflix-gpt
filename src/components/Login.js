@@ -7,9 +7,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import downloadImg from "../img/download.png";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { logo } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
@@ -19,7 +20,7 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const fullname = useRef(null);
-  const navigate = useNavigate();
+  
 
   const handleButtonClick = () => {
     const fullNameValue = fullname.current ? fullname.current.value : "";
@@ -44,7 +45,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: fullNameValue,
-            photoURL: "https://avatars.githubusercontent.com/u/186785986?v=4",
+            photoURL: downloadImg  
           })
             .then(() => {
              const { uid, email, desplayName, photoURL } = auth.currentUser;
@@ -57,7 +58,7 @@ const Login = () => {
                       })
                     );
             
-              navigate("/browse");
+          
             })
             .catch((error) => {
               // An error occurred
@@ -82,8 +83,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+         
           // ...
         })
         .catch((error) => {
@@ -102,7 +102,7 @@ const Login = () => {
       <Header />
       <div className="absolute inset-0 -z-10">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/e393bb3f-261f-43d1-99bb-16a157885615/web/TJ-ru-20260105-TRIFECTA-perspective_fa6ece3f-a5be-4ce0-a137-3d863457a489_large.jpg"
+          src={logo}
           alt="phot"
           className="w-full h-full object-cover"
         />
