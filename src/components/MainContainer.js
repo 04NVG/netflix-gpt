@@ -8,7 +8,7 @@ export const MainContainer = () => {
   if (!movies) return;
 
   const mainmovies = movies[0];
-  console.log('sdfsf',mainmovies);
+
 
   const { original_title, overview,id} = mainmovies;
 
