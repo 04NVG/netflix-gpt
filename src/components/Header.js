@@ -40,7 +40,7 @@ export const Header = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const handleGptSearchClick = () => {
     dispatch( toggleGptSearchView())
